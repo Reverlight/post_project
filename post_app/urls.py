@@ -5,10 +5,12 @@ from .views import (
     creation,
     like,
     analytics,
-    login
+    login,
+    main
 )
 
 urlpatterns = [
+    path('', main),
     path('user/signup/', signup),
     path('user/login/', login),
     path('post/creation/', creation),

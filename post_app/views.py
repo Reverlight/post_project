@@ -2,6 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
+def main(request):
+    return HttpResponse('<h1>Future Main</h1>')
+
+
 def signup(request):
     return HttpResponse('<h1>Future Sign up</h1>')
 

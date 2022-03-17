@@ -10,10 +10,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', main),
-    path('user/signup/', signup),
-    path('user/login/', login),
-    path('post/creation/', creation),
-    path('post/like/', like),
-    path('analytics/', analytics)
+    path('', main, name='main'),
+    path('user/signup/', signup, name='signup'),
+    path('user/login/', login, name='login'),
+    path('post/creation/', creation, name='creation'),
+    path('post/like/', like, name='like'),
+    path('analytics/', analytics, name='analytics')
 ]

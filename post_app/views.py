@@ -1,12 +1,14 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from rest_framework import status
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .models import User
 from .renderers import UserJSONRenderer
-from .serializers import UserSignupSerializer, UserLoginSerializer
+from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
+from .services import decode_token
 
 
 def main(request):
@@ -45,6 +47,21 @@ class LoginAPIView(APIView):
         response.status_code = 200
 
         return response
+
+
+class UserAPIView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = UserLoginSerializer
+    renderer_classes = (UserJSONRenderer,)
+
+    def get(self, request):
+        token = request.COOKIES.get('token')
+        payload = decode_token(token)
+
+        user = User.objects.filter(id=payload['id']).first()
+        serializer = self.serializer_class(user)
+
+        return Response(serializer.data)
 
 
 def analytics(request):

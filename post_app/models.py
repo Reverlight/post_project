@@ -43,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    last_request = models.DateTimeField(null=True)
 
     # USERNAME_FIELD determines what field is used for login. We use email.
     USERNAME_FIELD = 'email'
@@ -57,6 +58,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def token(self):
         return self._generate_jwt_token()
+
+    def update_last_request(self):
+        dt = datetime.now()
+        self.last_request = dt
+        self.save()
 
     def get_full_name(self):
         return self.username

@@ -62,3 +62,9 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'username': user.username,
             'token': user.token
         }
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password', 'token']

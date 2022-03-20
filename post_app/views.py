@@ -36,7 +36,6 @@ class LoginAPIView(APIView):
 
     @update_last_request
     def post(self, request):
-        print(request)
         user = request.data.get('user', {})
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)

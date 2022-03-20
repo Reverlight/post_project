@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
 
 from post_app.models import User
@@ -56,6 +57,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'User has been deactivated '
             )
+
+        update_last_login(None, user)
 
         return {
             'email': user.email,

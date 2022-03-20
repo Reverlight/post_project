@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from rest_framework import status
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .decorators import update_last_request
 from .models import User
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
@@ -34,9 +34,10 @@ class LoginAPIView(APIView):
     renderer_classes = (UserJSONRenderer, )
     serializer_class = UserLoginSerializer
 
+    @update_last_request
     def post(self, request):
+        print(request)
         user = request.data.get('user', {})
-
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer_data = serializer.data
@@ -54,6 +55,7 @@ class UserAPIView(APIView):
     serializer_class = UserLoginSerializer
     renderer_classes = (UserJSONRenderer,)
 
+    @update_last_request
     def get(self, request):
         token = request.COOKIES.get('token')
         payload = decode_token(token)

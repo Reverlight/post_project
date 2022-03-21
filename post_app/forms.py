@@ -9,6 +9,12 @@ class PostForm(ModelForm):
         fields = ['title', 'text']
 
 
+class UserLoginForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+
 class UserForm(ModelForm):
     class Meta:
         model = User

@@ -106,6 +106,7 @@ class PostCreate(CreateView):
             post.created_by = user
             post.save()
             return HttpResponse('<h1>Form is saved!</h1>', status=200)
+
         return render(request, 'post_app/post_form.html', {'form', form})
 
 

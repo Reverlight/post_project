@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %} User Login {% endblock %}
+
+{% block content %}
+    <form method="POST">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    <p id="message"></p>
+    <script src="{% static 'js/user_login.js'%}"></script>
+{% endblock %}

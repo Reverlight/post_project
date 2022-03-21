@@ -11,11 +11,17 @@ from .models import User, Post
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from .services import decode_token
-from .forms import PostForm
+from .forms import PostForm, UserForm
 
 
 def main(request):
     return HttpResponse('<h1>Future Main</h1>')
+
+
+def signup(request):
+    form = UserForm()
+    context = {'form': form}
+    return render(request, 'post_app/user_signup.html', context)
 
 
 class SignupAPIView(APIView):

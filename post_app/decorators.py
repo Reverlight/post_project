@@ -5,9 +5,9 @@ from .services import decode_token
 def update_last_request(func):
     def wrapper(obj, request):
         user = request.data.get('user', {})
-        username = user['username']
+        email = user['email']
 
-        user = User.objects.filter(username=username).first()
+        user = User.objects.filter(email=email).first()
         user.update_last_request()
         return func(obj, request)
 

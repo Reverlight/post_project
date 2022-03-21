@@ -37,6 +37,7 @@ class LoginAPIView(APIView):
     renderer_classes = (UserJSONRenderer, )
     serializer_class = UserLoginSerializer
 
+    @update_last_request
     def post(self, request):
         user = request.data.get('user', {})
         serializer = self.serializer_class(data=user)

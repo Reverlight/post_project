@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .decorators import update_last_request, login_required
-from .models import User
+from .models import User, Post
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from .services import decode_token
@@ -69,6 +69,11 @@ class UserAPIView(APIView):
 
 def analytics(request):
     return HttpResponse('<h1>Future Analytics</h1>')
+
+
+class PostList(ListView):
+    template_name = 'post_app/post_listing.html'
+    model = Post
 
 
 class PostCreate(CreateView):

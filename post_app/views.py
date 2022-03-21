@@ -1,14 +1,17 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import CreateView, ListView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .decorators import update_last_request
-from .models import User
+from .decorators import update_last_request, login_required
+from .models import User, Post
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from .services import decode_token
+from .forms import PostForm
 
 
 def main(request):
@@ -69,8 +72,29 @@ def analytics(request):
     return HttpResponse('<h1>Future Analytics</h1>')
 
 
-def creation(request):
-    return HttpResponse('<h1>Future Post Creation</h1>')
+class PostList(ListView):
+    template_name = 'post_app/post_listing.html'
+    model = Post
+
+
+class PostCreate(CreateView):
+    @login_required
+    def get(self, request, *args, **kwargs):
+        context = {'form': PostForm()}
+        return render(request, 'post_app/post_form.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            token = request.COOKIES.get('token')
+            payload = decode_token(token)
+
+            user = User.objects.filter(id=payload['id']).first()
+            post = form.save(commit=False)
+            post.created_by = user
+            post.save()
+            return HttpResponse('<h1>Form is saved!</h1>', status=200)
+        return render(request, 'post_app/post_form.html', {'form', form})
 
 
 def like(request):

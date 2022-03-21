@@ -10,6 +10,12 @@ from django.db import models
 import jwt
 
 
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    text = models.TextField()
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
         if username is None:

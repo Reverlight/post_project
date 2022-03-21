@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .decorators import update_last_request
+from .decorators import update_last_request, login_required
 from .models import User
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
@@ -72,6 +72,7 @@ def analytics(request):
 
 
 class PostCreate(CreateView):
+    @login_required
     def get(self, request, *args, **kwargs):
         context = {'form': PostForm()}
         return render(request, 'post_app/post_form.html', context)

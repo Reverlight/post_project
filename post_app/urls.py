@@ -14,7 +14,7 @@ from .views import (
 
 urlpatterns = [
     path('', main, name='main'),
-    path('user/signup/api/', SignupAPIView.as_view(), name='signup'),
+    path('user/signup/api/', SignupAPIView.as_view(), name='signup-api'),
     path('user/signup/', signup, name='signup'),
     path('user/', UserAPIView.as_view(), name='user-data'),
     path('user/login/', LoginAPIView.as_view(), name='login'),

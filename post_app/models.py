@@ -16,6 +16,11 @@ class Post(models.Model):
     created_by = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True)
 
 
+class Like(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, db_index=True)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
         if username is None:

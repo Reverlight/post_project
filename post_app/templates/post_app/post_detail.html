@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block title %} Post detail {% endblock %}
+
+{% block content %}
+    <ul>
+    <li>
+        <p>
+            TITLE:
+            <br>
+            {{ post.title }}
+        </p>
+        <p>
+            TEXT:
+            <br>
+            {{ post.text }}
+        </p>
+        <p>
+            AUTHOR:
+            <br>
+            {{ post.created_by }}
+        </p>
+    </li>
+
+    </ul>
+
+{% endblock %}

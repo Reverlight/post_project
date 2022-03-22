@@ -25,6 +25,7 @@ class Post(models.Model):
 class Like(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, db_index=True)
+    made_at_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('user', 'post')

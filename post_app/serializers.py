@@ -24,13 +24,11 @@ class UserSignupSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.CharField(max_length=255)
-    username = serializers.CharField(max_length=255, read_only=True)
     password = serializers.CharField(max_length=128, write_only=True)
-    token = serializers.CharField(max_length=255, read_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
+        fields = ['email', 'password', 'token']
 
     def validate(self, data):
         email = data.get('email', None)
@@ -45,7 +43,6 @@ class UserLoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Password is required'
             )
-
         user = authenticate(username=email, password=password)
 
         if user is None:

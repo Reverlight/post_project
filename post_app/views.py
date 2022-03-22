@@ -11,7 +11,7 @@ from .models import User, Post
 from .renderers import UserJSONRenderer
 from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from .services import decode_token
-from .forms import PostForm, UserForm
+from .forms import PostForm, UserForm, UserLoginForm
 
 
 def main(request):
@@ -22,6 +22,12 @@ def signup(request):
     form = UserForm()
     context = {'form': form}
     return render(request, 'post_app/user_signup.html', context)
+
+
+def login(request):
+    form = UserLoginForm()
+    context = {'form': form}
+    return render(request, 'post_app/user_login.html', context)
 
 
 class SignupAPIView(APIView):
@@ -99,7 +105,9 @@ class PostCreate(CreateView):
             post = form.save(commit=False)
             post.created_by = user
             post.save()
+
             return HttpResponse('<h1>Form is saved!</h1>', status=200)
+
         return render(request, 'post_app/post_form.html', {'form', form})
 
 

@@ -7,6 +7,7 @@ from .views import (
     UserAPIView,
     PostCreate,
     PostDetail,
+    like_api,
     PostList,
     like,
     analytics,
@@ -23,6 +24,7 @@ urlpatterns = [
     path('user/login/api/', LoginAPIView.as_view(), name='login-api'),
     path('post/creation/', PostCreate.as_view(), name='creation'),
     path('post/<int:pk>/', PostDetail.as_view(), name='detail'),
+    path('post/<int:pk>/like/', like_api, name='like'),
     path('posts/', PostList.as_view(), name='creation'),
     path('post/like/', like, name='like'),
     path('analytics/', analytics, name='analytics')

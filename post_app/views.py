@@ -82,7 +82,7 @@ class LoginAPIView(APIView):
 
 class UserAPIView(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = UserLoginSerializer
+    serializer_class = UserSerializer
     renderer_classes = (UserJSONRenderer,)
 
     def get(self, request):

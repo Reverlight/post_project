@@ -1,10 +1,12 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block title %} Post detail {% endblock %}
 
 {% block content %}
     <ul>
     <li>
+         {% csrf_token %}
         <p>
             TITLE:
             <br>
@@ -20,8 +22,13 @@
             <br>
             {{ post.created_by }}
         </p>
-    </li>
+           <p>
+            Likes:
+            <br>
+               <span id="like-count">{{ like_count }}</span>
+        </p>
 
+    </li>
     </ul>
 
 {% endblock %}

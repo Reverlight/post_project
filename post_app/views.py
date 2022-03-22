@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -87,6 +87,12 @@ def analytics(request):
 class PostList(ListView):
     template_name = 'post_app/post_listing.html'
     model = Post
+
+
+class PostDetail(DetailView):
+    template_name = 'post_app/post_detail.html'
+    model = Post
+    context_object_name = 'post'
 
 
 class PostCreate(CreateView):

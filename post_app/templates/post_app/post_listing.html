@@ -17,6 +17,7 @@
             {{ post.text|truncatechars:10 }}
         </p>
 
+        <p><a href="{% url 'detail' post.pk %}">Go to post</a></p>
     </li>
 {% empty %}
     <li>No articles yet.</li>

@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     const username = document.querySelector('input[name="username"]')
     const email = document.querySelector('input[name="email"]')
-    const password = document.querySelector('input[name="email"]')
+    const password = document.querySelector('input[name="password"]')
     const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')
     const signupUrl = window.location + 'api/'
     const message = document.querySelector('#message')

@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from .decorators import update_last_request, login_required
 from .models import User, Post
 from .renderers import UserJSONRenderer
-from .serializers import UserSignupSerializer, UserLoginSerializer
+from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from .services import decode_token, set_like, has_user_liked, set_dislike, get_user
 from .forms import PostForm, UserForm, UserLoginForm
 
@@ -82,15 +82,14 @@ class LoginAPIView(APIView):
 
 class UserAPIView(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = UserLoginSerializer
+    serializer_class = UserSerializer
     renderer_classes = (UserJSONRenderer,)
 
-    @update_last_request
     def get(self, request):
         token = request.COOKIES.get('token')
         payload = decode_token(token)
-
         user = User.objects.filter(id=payload['id']).first()
+        user.update_last_request()
         serializer = self.serializer_class(user)
 
         return Response(serializer.data)

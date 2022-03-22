@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %} Post detail {% endblock %}
+
+{% block content %}
+    <ul>
+    <li>
+         {% csrf_token %}
+        <p>
+            TITLE:
+            <br>
+            {{ post.title }}
+        </p>
+        <p>
+            TEXT:
+            <br>
+            {{ post.text }}
+        </p>
+        <p>
+            AUTHOR:
+            <br>
+            {{ post.created_by }}
+        </p>
+           <p>
+            Likes:
+            <br>
+               <span id="like-count">{{ like_count }}</span>
+        </p>
+        <button id="toggle-like">Toggle Like</button>
+        <p id="message"></p>
+    </li>
+    </ul>
+    <script src="{% static 'js/like_toggle.js' %}"></script>
+{% endblock %}

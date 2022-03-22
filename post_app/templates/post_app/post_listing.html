@@ -14,13 +14,9 @@
         <p>
             TEXT:
             <br>
-            {{ post.text }}
+            {{ post.text|truncatechars:10 }}
         </p>
-        <p>
-            AUTHOR:
-            <br>
-            {{ post.created_by }}
-        </p>
+        <p><a href="{% url 'detail' post.pk %}">Go to post</a></p>
     </li>
 {% empty %}
     <li>No articles yet.</li>

@@ -1,6 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -9,8 +9,8 @@ from rest_framework.views import APIView
 from .decorators import update_last_request, login_required
 from .models import User, Post
 from .renderers import UserJSONRenderer
-from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
-from .services import decode_token
+from .serializers import UserSignupSerializer, UserLoginSerializer
+from .services import decode_token, set_like, has_user_liked, set_dislike, get_user
 from .forms import PostForm, UserForm, UserLoginForm
 
 
@@ -28,6 +28,22 @@ def login(request):
     form = UserLoginForm()
     context = {'form': form}
     return render(request, 'post_app/user_login.html', context)
+
+
+def like_api(request, **kwargs):
+    if request.method == 'POST':
+        token = request.COOKIES.get('token')
+        user = get_user(token)
+        post = Post.objects.filter(id=kwargs['pk']).first()
+
+        if not has_user_liked(user, post):
+            set_like(user, post)
+            return JsonResponse({'status': 'like_set'})
+        else:
+            set_dislike(user, post)
+            return JsonResponse({'status': 'dislike_set'})
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
 class SignupAPIView(APIView):
@@ -87,6 +103,17 @@ def analytics(request):
 class PostList(ListView):
     template_name = 'post_app/post_listing.html'
     model = Post
+
+
+class PostDetail(DetailView):
+    template_name = 'post_app/post_detail.html'
+    model = Post
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['like_count'] = context['object'].get_likes()
+        return context
 
 
 class PostCreate(CreateView):

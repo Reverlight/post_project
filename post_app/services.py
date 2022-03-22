@@ -50,6 +50,10 @@ def set_dislike(user, post):
     like.delete()
 
 
+def parse_date(date_str):
+    return datetime.strptime(date_str, '%Y-%m-%d')
+
+
 def get_or_none(model, **kwargs):
     try:
         return model.objects.get(**kwargs)

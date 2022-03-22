@@ -6,28 +6,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .decorators import update_last_request, login_required
-from .models import User, Post
-from .renderers import UserJSONRenderer
-from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
-from .services import decode_token, set_like, has_user_liked, set_dislike, get_user
-from .forms import PostForm, UserForm, UserLoginForm
-
-
-def main(request):
-    return HttpResponse('<h1>Future Main</h1>')
-
-
-def signup(request):
-    form = UserForm()
-    context = {'form': form}
-    return render(request, 'post_app/user_signup.html', context)
-
-
-def login(request):
-    form = UserLoginForm()
-    context = {'form': form}
-    return render(request, 'post_app/user_login.html', context)
+from ..decorators import update_last_request, login_required
+from ..models import User, Post
+from ..renderers import UserJSONRenderer
+from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
+from ..services import decode_token, set_like, has_user_liked, set_dislike, get_user
+from ..forms import PostForm
 
 
 def like_api(request, **kwargs):
@@ -47,7 +31,7 @@ def like_api(request, **kwargs):
 
 
 class SignupAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = UserSignupSerializer
 
     def post(self, request):
@@ -61,8 +45,8 @@ class SignupAPIView(APIView):
 
 
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny, )
-    renderer_classes = (UserJSONRenderer, )
+    permission_classes = (AllowAny,)
+    renderer_classes = (UserJSONRenderer,)
     serializer_class = UserLoginSerializer
 
     @update_last_request
@@ -93,10 +77,6 @@ class UserAPIView(APIView):
         serializer = self.serializer_class(user)
 
         return Response(serializer.data)
-
-
-def analytics(request):
-    return HttpResponse('<h1>Future Analytics</h1>')
 
 
 class PostList(ListView):
@@ -135,7 +115,3 @@ class PostCreate(CreateView):
             return HttpResponse('<h1>Form is saved!</h1>', status=200)
 
         return render(request, 'post_app/post_form.html', {'form', form})
-
-
-def like(request):
-    return HttpResponse('<h1>Future Post Like</h1>')

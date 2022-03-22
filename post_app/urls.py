@@ -3,13 +3,13 @@ from django.urls import path
 from .views.api import (
     SignupAPIView,
     UserAPIView,
-    PostCreate,
-    PostDetail,
     like_api,
-    PostList,
     LoginAPIView,
 )
 from .views.pages import (
+    PostList,
+    PostCreate,
+    PostDetail,
     signup,
     login,
     analytics,

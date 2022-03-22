@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView
 
-from ..forms import UserForm, UserLoginForm
-from ..models import Like
-from ..services import parse_date
+from ..decorators import login_required
+from ..forms import UserForm, UserLoginForm, PostForm
+from ..models import Like, Post, User
+from ..services import parse_date, decode_token
 
 
 def analytics(request):
@@ -34,3 +36,41 @@ def login(request):
     form = UserLoginForm()
     context = {'form': form}
     return render(request, 'post_app/user_login.html', context)
+
+
+class PostList(ListView):
+    template_name = 'post_app/post_listing.html'
+    model = Post
+
+
+class PostDetail(DetailView):
+    template_name = 'post_app/post_detail.html'
+    model = Post
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['like_count'] = context['object'].get_likes()
+        return context
+
+
+class PostCreate(CreateView):
+    @login_required
+    def get(self, request, *args, **kwargs):
+        context = {'form': PostForm()}
+        return render(request, 'post_app/post_form.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            token = request.COOKIES.get('token')
+            payload = decode_token(token)
+
+            user = User.objects.filter(id=payload['id']).first()
+            post = form.save(commit=False)
+            post.created_by = user
+            post.save()
+
+            return HttpResponse('<h1>Form is saved!</h1>', status=200)
+
+        return render(request, 'post_app/post_form.html', {'form', form})

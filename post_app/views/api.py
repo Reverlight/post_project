@@ -1,17 +1,14 @@
-from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
-from django.shortcuts import render
-from django.views.generic import CreateView, ListView, DetailView
+from django.http import JsonResponse, HttpResponseNotFound
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..decorators import update_last_request, login_required
+from ..decorators import update_last_request
 from ..models import User, Post
 from ..renderers import UserJSONRenderer
 from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
 from ..services import decode_token, set_like, has_user_liked, set_dislike, get_user
-from ..forms import PostForm
 
 
 def like_api(request, **kwargs):
@@ -77,41 +74,3 @@ class UserAPIView(APIView):
         serializer = self.serializer_class(user)
 
         return Response(serializer.data)
-
-
-class PostList(ListView):
-    template_name = 'post_app/post_listing.html'
-    model = Post
-
-
-class PostDetail(DetailView):
-    template_name = 'post_app/post_detail.html'
-    model = Post
-    context_object_name = 'post'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['like_count'] = context['object'].get_likes()
-        return context
-
-
-class PostCreate(CreateView):
-    @login_required
-    def get(self, request, *args, **kwargs):
-        context = {'form': PostForm()}
-        return render(request, 'post_app/post_form.html', context)
-
-    def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST)
-        if form.is_valid():
-            token = request.COOKIES.get('token')
-            payload = decode_token(token)
-
-            user = User.objects.filter(id=payload['id']).first()
-            post = form.save(commit=False)
-            post.created_by = user
-            post.save()
-
-            return HttpResponse('<h1>Form is saved!</h1>', status=200)
-
-        return render(request, 'post_app/post_form.html', {'form', form})

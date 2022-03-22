@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .decorators import update_last_request, login_required
-from .models import User, Post, Like
+from .models import User, Post
 from .renderers import UserJSONRenderer
-from .serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
+from .serializers import UserSignupSerializer, UserLoginSerializer
 from .services import decode_token, set_like, has_user_liked, set_dislike, get_user
 from .forms import PostForm, UserForm, UserLoginForm
 

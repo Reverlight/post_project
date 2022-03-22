@@ -1,17 +1,18 @@
 from django.urls import path
 
-from .views import (
+from .views.api import (
     SignupAPIView,
-    signup,
-    login,
     UserAPIView,
     PostCreate,
     PostDetail,
     like_api,
     PostList,
-    like,
-    analytics,
     LoginAPIView,
+)
+from .views.pages import (
+    signup,
+    login,
+    analytics,
     main
 )
 
@@ -26,6 +27,5 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetail.as_view(), name='detail'),
     path('post/<int:pk>/like/', like_api, name='like'),
     path('posts/', PostList.as_view(), name='creation'),
-    path('post/like/', like, name='like'),
     path('analytics/', analytics, name='analytics')
 ]

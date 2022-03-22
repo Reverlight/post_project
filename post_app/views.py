@@ -112,8 +112,9 @@ class PostDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['like_count'] = Like.objects.filter(post__id=context['object'].id).count()
+        context['like_count'] = context['object'].get_likes()
         return context
+
 
 class PostCreate(CreateView):
     @login_required

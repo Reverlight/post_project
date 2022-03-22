@@ -18,6 +18,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_likes(self):
+        return Like.objects.filter(post__id=self.pk).count()
+
 
 class Like(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True)

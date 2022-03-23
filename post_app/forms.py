@@ -27,9 +27,8 @@ class UserSignupForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         for field in self.fields:
-            data = {'class': 'form-control',
-                 'placeholder': f'Enter {str(field)}'
-                 }
-
-
+            data = {
+                'class': 'form-control',
+                'placeholder': f'Enter {str(field)}'
+            }
             self.fields[str(field)].widget.attrs.update(data)

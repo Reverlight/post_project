@@ -13,23 +13,26 @@ Application for creating contacts with corresponding search by all the fields.
 * Install python 3
 * Create virtualenv
 * Git clone this repository
-* Use following commands for set-up using virtualenv:
+* Use following commands for set-up:
 
-``pip install -r requirements``
+```shell
+pip install -r requirements
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic
 
-``python manage.py makemigrations``
+```
 
-``python manage.py migrate``
+## Run Server
 
-``python manage.py collectstatic``
-
-## Run 
-
-``python manage.py runserver``
+```shell
+python manage.py runserver
+```
 
 ## User Guide
-
 Open root url to navigate:
+
+http://localhost:8000/
 
 ![Screenshot_1](https://user-images.githubusercontent.com/52380931/159695243-d6cc9696-f2cd-463b-a49e-61bcae9ef91a.png)
 

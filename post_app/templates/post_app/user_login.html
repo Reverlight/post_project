@@ -4,11 +4,13 @@
 {% block title %} User Login {% endblock %}
 
 {% block content %}
+    <div class="p-2">
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Submit">
+        <input class="btn btn-primary" type="submit" value="Submit">
     </form>
-    <p id="message"></p>
+    </div>
+    <p id="message" class="d-none alert alert-info"></p>
     <script src="{% static 'js/user_login.js'%}"></script>
 {% endblock %}

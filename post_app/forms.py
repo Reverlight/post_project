@@ -11,9 +11,21 @@ class PostForm(ModelForm):
 
 
 class UserLoginForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
         model = User
         fields = ['email', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            data = {
+                'class': 'form-control',
+                'placeholder': f'Enter {str(field)}'
+            }
+            self.fields[str(field)].widget.attrs.update(data)
 
 
 class UserSignupForm(ModelForm):

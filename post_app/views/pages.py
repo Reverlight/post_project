@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 
-from ..decorators import login_required
-from ..forms import UserForm, UserLoginForm, PostForm
+from ..forms import UserSignupForm, UserLoginForm, PostForm
 from ..models import Like, Post, User
 from ..services import parse_date, decode_token
 
@@ -23,11 +24,11 @@ def analytics(request):
 
 
 def main(request):
-    return HttpResponse('<h1>Future Main</h1>')
+    return render(request, 'post_app/url-guide-page.html')
 
 
 def signup(request):
-    form = UserForm()
+    form = UserSignupForm()
     context = {'form': form}
     return render(request, 'post_app/user_signup.html', context)
 
@@ -41,21 +42,16 @@ def login(request):
 class PostList(ListView):
     template_name = 'post_app/post_listing.html'
     model = Post
+    context_object_name = 'posts'
 
 
-class PostDetail(DetailView):
+class PostDetail(LoginRequiredMixin,DetailView):
     template_name = 'post_app/post_detail.html'
     model = Post
     context_object_name = 'post'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['like_count'] = context['object'].get_likes()
-        return context
 
-
-class PostCreate(CreateView):
-    @login_required
+class PostCreate(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         context = {'form': PostForm()}
         return render(request, 'post_app/post_form.html', context)
@@ -71,6 +67,6 @@ class PostCreate(CreateView):
             post.created_by = user
             post.save()
 
-            return HttpResponse('<h1>Form is saved!</h1>', status=200)
+            return redirect(reverse('detail', kwargs={'pk': post.pk}))
 
         return render(request, 'post_app/post_form.html', {'form', form})

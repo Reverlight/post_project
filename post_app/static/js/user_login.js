@@ -16,11 +16,13 @@ window.addEventListener('load', () => {
             body: JSON.stringify(data)
         }).then(response => {
             response.text().then((errorText) => {
+
                     if (response.status === 400){
+                        message.classList.remove('d-none')
                         message.innerHTML = errorText
                     }
                     else if (response.status === 200){
-                        message.innerHTML = 'Success!!!'
+                        window.location.href = '../';
                     }
                 })
         })

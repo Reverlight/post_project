@@ -4,12 +4,7 @@
 {% block title %} Post signup {% endblock %}
 
 {% block content %}
-    <form method="POST">
-
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
-    <p id="message"></p>
+    {% include 'includes/_form.html' %}
+    <p class="alert alert-info d-none" id="message"></p>
     <script src="{% static 'js/user_signup.js'%}"></script>
 {% endblock %}

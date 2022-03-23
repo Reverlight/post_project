@@ -3,10 +3,5 @@
 {% block title %} Post creation {% endblock %}
 
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
-
+    {% include 'includes/_form.html' %}
 {% endblock %}

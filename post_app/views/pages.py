@@ -41,17 +41,13 @@ def login(request):
 class PostList(ListView):
     template_name = 'post_app/post_listing.html'
     model = Post
+    context_object_name = 'posts'
 
 
 class PostDetail(DetailView):
     template_name = 'post_app/post_detail.html'
     model = Post
     context_object_name = 'post'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['like_count'] = context['object'].get_likes()
-        return context
 
 
 class PostCreate(CreateView):

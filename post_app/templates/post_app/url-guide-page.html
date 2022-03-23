@@ -32,7 +32,7 @@
             <small>Specify date_from and date_to like the following pattern:
                 ?date_from=2022-02-12&date_to=2022-03-22</small>
         </a>
-        <a href="{% url 'creation' %}?date_from=2022-02-12&date_to=2022-03-22"
+        <a href="{% url 'creation' %}"
            class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Create post</h5>
@@ -48,7 +48,7 @@
             <p class="mb-1 text-primary">/post/detail/id</p>
             <small>User must be logged</small>
         </a>
-        <a href="{% url 'posts' %}?date_from=2022-02-12&date_to=2022-03-22"
+        <a href="{% url 'posts' %}"
            class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">View post list</h5>

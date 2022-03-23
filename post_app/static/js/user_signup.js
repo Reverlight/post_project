@@ -17,8 +17,8 @@ window.addEventListener('load', () => {
             body: JSON.stringify(data)
         }).then(response => {
             response.text().then((errorText) => {
-                    message.classList.remove('d-none')
                     if (response.status === 400){
+                        message.classList.remove('d-none')
                         message.innerHTML = errorText
                     }
                     else if (response.status === 201){

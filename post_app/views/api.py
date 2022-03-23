@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponseNotFound
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -61,7 +61,7 @@ class LoginAPIView(APIView):
 
 
 class UserAPIView(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
     renderer_classes = (UserJSONRenderer,)
 

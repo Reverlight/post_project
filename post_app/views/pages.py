@@ -23,7 +23,7 @@ def analytics(request):
 
 
 def main(request):
-    return HttpResponse('<h1>Future Main</h1>')
+    return render(request, 'post_app/url-guide-page.html')
 
 
 def signup(request):

@@ -9,6 +9,8 @@ from django.contrib.auth.models import (
 from django.db import models
 import jwt
 
+from post_app.services import get_or_none
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -20,6 +22,17 @@ class Post(models.Model):
 
     def get_likes(self):
         return Like.objects.filter(post__id=self.pk).count()
+
+    def set_like(self, user):
+        Like.objects.create(user=user, post=self).save()
+
+    def set_dislike(self, user):
+        like = get_or_none(Like, user=user, post=self)
+        like.delete()
+
+    def has_user_liked(self, user):
+        result = get_or_none(Like, user=user, post=self)
+        return result is not None
 
 
 class Like(models.Model):

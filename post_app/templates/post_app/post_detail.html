@@ -5,16 +5,15 @@
 
 {% block content %}
     <div class="card" style="width: 18rem;">
-    {% csrf_token %}
-  <div class="card-body">
-    <h5 class="card-title"> {{ post.title }}</h5>
-
-    <p class="card-text">{{ post.text }}</p>
-    <p class="card-text">Author: {{ post.created_by }}</p>
-    <p class="card-text">Likes:  <span id="like-count">{{ post.get_likes }}</span></p>
-  </div>
+        {% csrf_token %}
+        <div class="card-body">
+            <h5 class="card-title"> {{ post.title }}</h5>
+            <p class="card-text">{{ post.text }}</p>
+            <p class="card-text">Author: {{ post.created_by }}</p>
+            <p class="card-text">Likes: <span id="like-count">{{ post.get_likes }}</span></p>
+        </div>
     </div>
     <button class="btn btn-primary" id="toggle-like">Toggle Like</button>
-        <p class="alert alert-info" id="message"></p>
+    <p class="alert alert-info" id="message"></p>
     <script src="{% static 'js/like_toggle.js' %}"></script>
 {% endblock %}

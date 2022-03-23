@@ -4,24 +4,24 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..decorators import update_last_request
-from ..models import User, Post
+from ..models import Post, User
 from ..renderers import UserJSONRenderer
 from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
-from ..services import decode_token, set_like, has_user_liked, set_dislike, get_user
+from ..services import decode_token
 
 
 def like_api(request, **kwargs):
     if request.method == 'POST':
         token = request.COOKIES.get('token')
-        user = get_user(token)
+        payload = decode_token(token)
+        user = User.objects.filter(id=payload['id']).first()
         post = Post.objects.filter(id=kwargs['pk']).first()
 
-        if not has_user_liked(user, post):
-            set_like(user, post)
+        if not post.has_user_liked(user):
+            post.set_like(user)
             return JsonResponse({'status': 'like_set'})
         else:
-            set_dislike(user, post)
+            post.set_dislike(user)
             return JsonResponse({'status': 'dislike_set'})
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
@@ -46,7 +46,6 @@ class LoginAPIView(APIView):
     renderer_classes = (UserJSONRenderer,)
     serializer_class = UserLoginSerializer
 
-    @update_last_request
     def post(self, request):
         user = request.data.get('user', {})
         serializer = self.serializer_class(data=user)
@@ -67,10 +66,5 @@ class UserAPIView(APIView):
     renderer_classes = (UserJSONRenderer,)
 
     def get(self, request):
-        token = request.COOKIES.get('token')
-        payload = decode_token(token)
-        user = User.objects.filter(id=payload['id']).first()
-        user.update_last_request()
-        serializer = self.serializer_class(user)
-
+        serializer = self.serializer_class(request.user)
         return Response(serializer.data)

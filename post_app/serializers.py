@@ -65,6 +65,11 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(max_length=255)
+    last_request = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    last_login = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
+        fields = ['email', 'username', 'last_request', 'last_login']
+

@@ -4,8 +4,6 @@ import jwt
 from django.conf import settings
 from rest_framework.exceptions import AuthenticationFailed
 
-from post_app.models import User, Like
-
 
 def encode_token(pk):
     dt = datetime.now() + timedelta(days=1)
@@ -35,21 +33,6 @@ def decode_token(token):
         raise AuthenticationFailed('Token is incorrect')
 
 
-def get_user(user_token):
-    payload = decode_token(user_token)
-    user = User.objects.filter(id=payload['id']).first()
-    return user
-
-
-def set_like(user, post):
-    Like.objects.create(user=user, post=post).save()
-
-
-def set_dislike(user, post):
-    like = get_or_none(Like, user=user, post=post)
-    like.delete()
-
-
 def parse_date(date_str):
     return datetime.strptime(date_str, '%Y-%m-%d')
 
@@ -59,8 +42,3 @@ def get_or_none(model, **kwargs):
         return model.objects.get(**kwargs)
     except model.DoesNotExist:
         return None
-
-
-def has_user_liked(user, post):
-    result = get_or_none(Like, user=user, post=post)
-    return result is not None

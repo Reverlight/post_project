@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
                         message.innerHTML = errorText
                     }
                     else if (response.status === 201){
-                        message.innerHTML = 'Success!!!'
+                        window.location.href = '../login';
                     }
                 })
         })

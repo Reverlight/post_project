@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 
 from ..decorators import login_required
-from ..forms import UserForm, UserLoginForm, PostForm
+from ..forms import UserSignupForm, UserLoginForm, PostForm
 from ..models import Like, Post, User
 from ..services import parse_date, decode_token
 
@@ -27,7 +27,7 @@ def main(request):
 
 
 def signup(request):
-    form = UserForm()
+    form = UserSignupForm()
     context = {'form': form}
     return render(request, 'post_app/user_signup.html', context)
 

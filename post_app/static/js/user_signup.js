@@ -17,6 +17,7 @@ window.addEventListener('load', () => {
             body: JSON.stringify(data)
         }).then(response => {
             response.text().then((errorText) => {
+                    message.style.display = 'block'
                     if (response.status === 400){
                         message.innerHTML = errorText
                     }

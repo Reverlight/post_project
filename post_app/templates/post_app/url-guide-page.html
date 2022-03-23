@@ -8,21 +8,19 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">User Signup</h5>
             </div>
-            <p class="mb-1 text-primary">user/signup</p>
-            <small>And some small print.</small>
+            <p class="mb-1 text-primary">/user/signup</p>
         </a>
         <a href="{% url 'login' %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">User Login</h5>
             </div>
-            <p class="mb-1 text-primary">user/login</p>
-            <small>And some small print.</small>
+            <p class="mb-1 text-primary">/user/login</p>
         </a>
         <a href="{% url 'user' %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Get user info</h5>
             </div>
-            <p class="mb-1 text-primary">user/</p>
+            <p class="mb-1 text-primary">/user/</p>
             <small>Get last request and last login time. User must be logged!</small>
         </a>
         <a href="{% url 'analytics' %}?date_from=2022-02-12&date_to=2022-03-22"
@@ -30,7 +28,7 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Get like analytics</h5>
             </div>
-            <p class="mb-1 text-primary">analytics/</p>
+            <p class="mb-1 text-primary">/analytics/</p>
             <small>Specify date_from and date_to like the following pattern:
                 ?date_from=2022-02-12&date_to=2022-03-22</small>
         </a>
@@ -39,15 +37,15 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Create post</h5>
             </div>
-            <p class="mb-1 text-primary">post/creation</p>
+            <p class="mb-1 text-primary">/post/creation</p>
             <small>User must be logged</small>
         </a>
-        <a href="{% url 'detail' 1 %}?date_from=2022-02-12&date_to=2022-03-22"
+        <a href="{% url 'detail' 1 %}"
            class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">View post detail and like/dislike</h5>
             </div>
-            <p class="mb-1 text-primary">post/detail/id</p>
+            <p class="mb-1 text-primary">/post/detail/id</p>
             <small>User must be logged</small>
         </a>
         <a href="{% url 'posts' %}?date_from=2022-02-12&date_to=2022-03-22"
@@ -55,7 +53,7 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">View post list</h5>
             </div>
-            <p class="mb-1 text-primary">posts/</p>
+            <p class="mb-1 text-primary">/posts/</p>
         </a>
     </div>
 {% endblock %}

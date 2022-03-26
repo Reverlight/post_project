@@ -10,6 +10,10 @@ from ..services import parse_date, decode_token
 
 
 def analytics(request):
+    """
+    Gets parameters date_from and date_to
+    Returns likes that have been made during specified time range
+    """
     _from = request.GET.get('date_from')
     _to = request.GET.get('date_to')
 
@@ -24,16 +28,19 @@ def analytics(request):
 
 
 def main(request):
+    """Guide page where all the pages' description and link present"""
     return render(request, 'post_app/url-guide-page.html')
 
 
 def signup(request):
+    """Signup user page"""
     form = UserSignupForm()
     context = {'form': form}
     return render(request, 'post_app/user_signup.html', context)
 
 
 def login(request):
+    """Login user page"""
     form = UserLoginForm()
     context = {'form': form}
     return render(request, 'post_app/user_login.html', context)
@@ -52,6 +59,13 @@ class PostDetail(LoginRequiredMixin,DetailView):
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
+    """
+    Get request: renders page with creation post form
+    Post request:
+        validates provided form
+        gets user by token
+        creates user post
+    """
     def get(self, request, *args, **kwargs):
         context = {'form': PostForm()}
         return render(request, 'post_app/post_form.html', context)

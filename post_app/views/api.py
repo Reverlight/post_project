@@ -11,6 +11,7 @@ from ..services import decode_token
 
 
 def like_api(request, **kwargs):
+    """Toggles user like for post (sets dislike or like)"""
     if request.method == 'POST':
         token = request.COOKIES.get('token')
         payload = decode_token(token)
@@ -28,6 +29,14 @@ def like_api(request, **kwargs):
 
 
 class SignupAPIView(APIView):
+    """Receives json and validating values to create user:
+    {
+        "email": value
+        "username": value
+        "token": value
+        "password": value
+     }
+    """
     permission_classes = (AllowAny,)
     serializer_class = UserSignupSerializer
 
@@ -42,6 +51,12 @@ class SignupAPIView(APIView):
 
 
 class LoginAPIView(APIView):
+    """Receives json, authenticates user and sets user cookie:
+    {
+        "email": value
+        "password": value
+    }
+    """
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = UserLoginSerializer
@@ -61,6 +76,10 @@ class LoginAPIView(APIView):
 
 
 class UserAPIView(APIView):
+    """
+    Gets user by provided token and renders user info:
+    email, username, last_request, last_login
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
     renderer_classes = (UserJSONRenderer,)

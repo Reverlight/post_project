@@ -11,12 +11,12 @@ class UserSignupSerializer(serializers.ModelSerializer):
         min_length=8,
         write_only=True
     )
-
-    token = serializers.CharField(max_length=255, read_only=True)
+    email = serializers.EmailField()
+    username = serializers.CharField(max_length=255)
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
+        fields = ['email', 'username', 'password']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)

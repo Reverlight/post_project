@@ -84,6 +84,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     Last_request field is updated
     every time when user makes request to the server (detected via UpdateUserMiddleware)
+
+    We are not creating last_login field since it is already inherited from django
     """
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(db_index=True, unique=True)

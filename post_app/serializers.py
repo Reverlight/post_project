@@ -6,14 +6,6 @@ from post_app.models import User
 
 
 class UserSignupSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        max_length=128,
-        min_length=8,
-        write_only=True
-    )
-    email = serializers.EmailField()
-    username = serializers.CharField(max_length=255)
-
     class Meta:
         model = User
         fields = ['email', 'username', 'password']
@@ -23,9 +15,6 @@ class UserSignupSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.CharField(max_length=255)
-    password = serializers.CharField(max_length=128, write_only=True)
-
     class Meta:
         model = User
         fields = ['email', 'password', 'token']
@@ -65,7 +54,6 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    email = serializers.CharField(max_length=255)
     last_request = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     last_login = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 

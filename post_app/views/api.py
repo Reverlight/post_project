@@ -1,13 +1,31 @@
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Post, User
+from ..models import Post, User, Like
 from ..renderers import UserJSONRenderer
 from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
-from ..services import decode_token
+from ..services import decode_token, parse_date
+
+
+def analytics_api(request):
+    """
+    Gets parameters date_from and date_to
+    Returns likes that have been made during specified time range
+    """
+    _from = request.GET.get('date_from')
+    _to = request.GET.get('date_to')
+
+    if not _from or not _to:
+        return HttpResponse(f'<h1>Please specify params date_from, date_to</h1>')
+
+    date_from = parse_date(request.GET.get('date_from'))
+    date_to = parse_date(request.GET.get('date_to'))
+
+    r = Like.made_at_time_range(date_from, date_to)
+    return JsonResponse({'likes_made': r})
 
 
 def like_api(request, **kwargs):

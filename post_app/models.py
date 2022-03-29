@@ -42,11 +42,15 @@ class Like(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE, db_index=True)
     made_at_time = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('user', 'post')
+    @classmethod
+    def made_at_time_range(cls, date_from, date_to):
+        return Like.objects.filter(made_at_time__range=(date_from, date_to)).count()
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        unique_together = ('user', 'post')
 
 
 class UserManager(BaseUserManager):

@@ -14,10 +14,9 @@ class UserSignupSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-class UserLoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['email', 'password', 'token']
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=255)
+    password = serializers.CharField(max_length=128, write_only=True)
 
     def validate(self, data):
         email = data.get('email', None)
@@ -32,6 +31,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Password is required'
             )
+
         user = authenticate(username=email, password=password)
 
         if user is None:

@@ -33,8 +33,8 @@ def like_api(request, **kwargs):
     if request.method == 'POST':
         token = request.COOKIES.get('token')
         payload = decode_token(token)
-        user = User.objects.filter(id=payload['id']).first()
-        post = Post.objects.filter(id=kwargs['pk']).first()
+        user = User.objects.get(id=payload['id'])
+        post = Post.objects.get(id=kwargs['pk'])
 
         if not post.has_user_liked(user):
             post.set_like(user)

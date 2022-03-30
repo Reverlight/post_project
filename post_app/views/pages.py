@@ -29,12 +29,14 @@ def login(request):
 
 
 class PostList(ListView):
+    queryset = Post.objects.select_related('created_by')
     template_name = 'post_app/post_listing.html'
     model = Post
     context_object_name = 'posts'
 
 
-class PostDetail(LoginRequiredMixin,DetailView):
+class PostDetail(LoginRequiredMixin, DetailView):
+    queryset = Post.objects.select_related('created_by')
     template_name = 'post_app/post_detail.html'
     model = Post
     context_object_name = 'post'

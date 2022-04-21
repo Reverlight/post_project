@@ -1,4 +1,4 @@
-# post_project
+# Posting App
 
 Main features:
 

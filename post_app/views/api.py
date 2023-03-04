@@ -11,6 +11,7 @@ from ..services import decode_token
 
 
 def like_api(request, **kwargs):
+    response = HttpResponseNotFound('<h1>Page not found</h1>')
     if request.method == 'POST':
         token = request.COOKIES.get('token')
         payload = decode_token(token)
@@ -19,12 +20,11 @@ def like_api(request, **kwargs):
 
         if not post.has_user_liked(user):
             post.set_like(user)
-            return JsonResponse({'status': 'like_set'})
+            response = JsonResponse({'status': 'like_set'})
         else:
             post.set_dislike(user)
-            return JsonResponse({'status': 'dislike_set'})
-    else:
-        return HttpResponseNotFound('<h1>Page not found</h1>')
+            response = JsonResponse({'status': 'dislike_set'})
+    return response
 
 
 class SignupAPIView(APIView):

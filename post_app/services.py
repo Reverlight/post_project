@@ -6,12 +6,12 @@ from rest_framework.exceptions import AuthenticationFailed
 
 
 def encode_token(pk):
-    dt = datetime.now() + timedelta(days=1)
+    token_expire_date = datetime.now() + timedelta(days=1)
 
     return jwt.encode(
         {
             'id': pk,
-            'exp': int(dt.strftime('%m%d%Y%H%M%S'))
+            'exp': int(token_expire_date.strftime('%m%d%Y%H%M%S'))
         },
         settings.SECRET_KEY,
         algorithm='HS256'

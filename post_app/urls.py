@@ -5,6 +5,7 @@ from .views.api import (
     UserAPIView,
     like_api,
     LoginAPIView,
+    PostListAPIView,
 )
 from .views.pages import (
     PostList,
@@ -15,6 +16,7 @@ from .views.pages import (
     analytics,
     main
 )
+
 
 urlpatterns = [
     path('', main, name='main'),
@@ -27,5 +29,6 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetail.as_view(), name='detail'),
     path('post/<int:pk>/like/', like_api, name='like'),
     path('posts/', PostList.as_view(), name='posts'),
+    path('posts/api/', PostListAPIView.as_view(), name='posts'),
     path('analytics/', analytics, name='analytics')
 ]

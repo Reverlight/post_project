@@ -16,7 +16,7 @@ def _read_lines_from_file(file_path):
     result = []
     with open(file_path, 'r', encoding='UTF-8') as file:
         for line in file:
-            result.append(line.replace('\n', '').replace(' ',  '-'))
+            result.append(line.replace('\n', ''))
     return result
 
 

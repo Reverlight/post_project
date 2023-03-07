@@ -1,5 +1,6 @@
 import random
 from datetime import datetime
+
 from config import (
     SENTENCES_PER_POST,
     PASSWORD_LENGTH,
@@ -11,6 +12,7 @@ from config import (
     MAX_POSTS_PER_USER,
     NUMBER_OF_USERS
 )
+
 
 TYPE_PATH_MAPPING = {
     'names': RANDOM_NAMES_PATH,

@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
-from post_bot.config import SENTENCES_PER_POST, PASSWORD_LENGTH, PASSWORD_CHARACTERS, EMAIL_DOMAINS, RANDOM_NAMES_PATH, RANDOM_SENTENCES_PATH
+from post_bot.config import SENTENCES_PER_POST, PASSWORD_LENGTH, PASSWORD_CHARACTERS, EMAIL_DOMAINS, RANDOM_NAMES_PATH, \
+    RANDOM_SENTENCES_PATH, MAX_LIKES_PER_USER, MAX_POSTS_PER_USER, NUMBER_OF_USERS
 
 TYPE_PATH_MAPPING = {
     'names': RANDOM_NAMES_PATH,
@@ -49,3 +50,15 @@ def generate_user(users):
 def generate_post(sentences):
     random_post = random.choices(sentences, k=SENTENCES_PER_POST)
     return ''.join(random_post)
+
+
+def generate_number_of_posts_for_user():
+    return random.randint(1, MAX_POSTS_PER_USER)
+
+
+def generate_number_of_likes_for_user():
+    return random.randint(1, MAX_LIKES_PER_USER)
+
+
+def get_number_of_users():
+    return NUMBER_OF_USERS

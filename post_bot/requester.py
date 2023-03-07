@@ -1,6 +1,13 @@
-from post_bot.config import USER_SIGNUP, USER_LOGIN_API, USER_SIGNUP_API, POSTS_CREATION, \
-    POST_LIST_API, LIKE_API
 from requests_html import HTMLSession
+
+from config import (
+    USER_SIGNUP,
+    USER_LOGIN_API,
+    USER_SIGNUP_API,
+    POSTS_CREATION,
+    POST_LIST_API,
+    LIKE_API
+)
 
 
 def get_session():
@@ -35,16 +42,16 @@ def login_user(email, password, session):
         'X-CSRFToken': csrf_token,
         'Content-Type': 'application/json',
     }
-    r = session.post(USER_LOGIN_API, json={'user': user})
+    response = session.post(USER_LOGIN_API, json={'user': user})
     session.headers = {
         **session.headers,
-        'token': r.cookies['token'],
+        'token': response.cookies['token'],
     }
 
 
 def get_posts(session):
-    r = session.get(POST_LIST_API)
-    return r.json()
+    response = session.get(POST_LIST_API)
+    return response.json()
 
 
 def create_post(session, post, username):

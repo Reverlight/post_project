@@ -1,7 +1,16 @@
 import random
 from datetime import datetime
-from post_bot.config import SENTENCES_PER_POST, PASSWORD_LENGTH, PASSWORD_CHARACTERS, EMAIL_DOMAINS, RANDOM_NAMES_PATH, \
-    RANDOM_SENTENCES_PATH, MAX_LIKES_PER_USER, MAX_POSTS_PER_USER, NUMBER_OF_USERS
+from config import (
+    SENTENCES_PER_POST,
+    PASSWORD_LENGTH,
+    PASSWORD_CHARACTERS,
+    EMAIL_DOMAINS,
+    RANDOM_NAMES_PATH,
+    RANDOM_SENTENCES_PATH,
+    MAX_LIKES_PER_USER,
+    MAX_POSTS_PER_USER,
+    NUMBER_OF_USERS
+)
 
 TYPE_PATH_MAPPING = {
     'names': RANDOM_NAMES_PATH,
@@ -27,7 +36,7 @@ def _generate_username(users):
 
 def _generate_password():
     password = ''
-    for i in range(PASSWORD_LENGTH):
+    for _ in range(PASSWORD_LENGTH):
         password += random.choice(PASSWORD_CHARACTERS)
     return password
 

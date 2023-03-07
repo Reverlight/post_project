@@ -1,8 +1,21 @@
 import random
 
-from post_bot.generator import get_data, generate_user, generate_post, generate_number_of_posts_for_user, \
-    generate_number_of_likes_for_user, get_number_of_users
-from post_bot.requester import get_session, signup_user, login_user, create_post, get_posts, like_post
+from post_bot.generator import (
+    get_data,
+    generate_user,
+    generate_post,
+    generate_number_of_posts_for_user,
+    generate_number_of_likes_for_user,
+    get_number_of_users
+)
+from post_bot.requester import (
+    get_session,
+    signup_user,
+    login_user,
+    create_post,
+    get_posts,
+    like_post
+)
 
 
 def run_one_bot_user():

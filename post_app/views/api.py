@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from ..models import Post, User
 from ..renderers import UserJSONRenderer
-from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer
+from ..serializers import UserSignupSerializer, UserLoginSerializer, UserSerializer, PostSerializer
 from ..services import decode_token
 
 
@@ -68,3 +68,13 @@ class UserAPIView(APIView):
     def get(self, request):
         serializer = self.serializer_class(request.user)
         return Response(serializer.data)
+
+
+class PostListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PostSerializer
+
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = self.serializer_class(posts, many=True)
+        return JsonResponse(serializer.data, safe=False)

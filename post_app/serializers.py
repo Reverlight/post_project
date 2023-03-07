@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
 
-from post_app.models import User
+from post_app.models import User, Post
 
 
 class UserSignupSerializer(serializers.ModelSerializer):
@@ -73,3 +73,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'username', 'last_request', 'last_login']
 
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
